@@ -1,2 +1,2 @@
-docker build -t menu-item-python .
+docker build -t item-catalog-python .
 docker-compose up

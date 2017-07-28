@@ -1,0 +1,30 @@
+{
+  "categories": [
+    {
+      "name": "Soccer",
+      "items": [
+        {
+          "name": "Ball",
+          "description": "A super ball for soccer"
+        },
+        {
+          "name": "Shirt",
+          "description": "A shirt for Soccer pratice"
+        }
+      ]
+    },
+    {
+      "name": "Skate",
+      "items": [
+        {
+          "name": "SkateBoard",
+          "description": "A super fast skate"
+        },
+        {
+          "name": "Caneleira",
+          "description": "Para protecao da canela"
+        }
+      ]
+    }
+  ]
+}
