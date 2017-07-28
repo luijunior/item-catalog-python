@@ -1,0 +1,6 @@
+sqlalchemy
+PyMySQL
+flask
+werkzeug
+Flask-Login
+oauth2client
