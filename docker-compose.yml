@@ -1,0 +1,19 @@
+version: '3.1'
+services:
+ item_catalog-db:
+  image: mysql:latest
+  environment:
+   MYSQL_ROOT_PASSWORD: admin123
+   MYSQL_DATABASE: item_catalog_db
+   MYSQL_USER: item_catalog_app
+   MYSQL_PASSWORD: itemcatalog123
+  ports:
+   - "3306:3306"
+  expose:
+   - '3306'
+ item_catalog_app:
+  image: item-catalog-python:latest
+  ports:
+   - "5000:5000"
+  links:
+   - 'item_catalog-db'
