@@ -4,6 +4,8 @@ from sqlalchemy.ext.declarative import declarative_base
 from sqlalchemy.orm import relationship
 from flask_restful import Resource, fields, marshal_with
 import database_factory
+from flask_login import UserMixin
+from passlib.apps import custom_app_context as pwd_context
 
 Base = declarative_base()
 
@@ -22,6 +24,21 @@ class Item(Base):
     date = Column(DateTime, nullable=False)
     category_id = Column(Integer, ForeignKey('category.id'))
     category = relationship(Category, lazy='subquery')
+
+
+class User(Base, UserMixin):
+    __tablename__ = 'user'
+    id = Column(Integer, primary_key=True)
+    name = Column(String(100), nullable=False)
+    email = Column(String(32), nullable=False, unique=True)
+    password_hash = Column(String(500), nullable=False)
+    picture = Column(String(500), nullable=True)
+
+    def hash_password(self, password):
+        self.password_hash = pwd_context.encrypt(password)
+
+    def verify_password(self, password):
+        return pwd_context.verify(password, self.password_hash)
 
 
 def get_all_categories():
@@ -69,6 +86,28 @@ def get_item_by_name(item_name):
     item = session.query(Item).filter_by(name=item_name).one()
     session.close()
     return item
+
+
+def create_user(user, password):
+    user.hash_password(password)
+    session = database_factory.get_session()
+    session.add(user)
+    session.commit()
+    session.close()
+
+
+def get_user_by_email(email):
+    session = database_factory.get_session()
+    user = session.query(User).filter_by(email=email).first()
+    session.close()
+    return user
+
+
+def get_user_by_id(user_id):
+    session = database_factory.get_session()
+    user = session.query(User).filter_by(id=user_id).first()
+    session.close()
+    return user
 
 
 def create_tables():

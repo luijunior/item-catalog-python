@@ -47,9 +47,11 @@
                 <main id="item_list" class="col-xs-8 col-sm-8 col-md-8 col-lg-8">
                     <h4>{{ category_name }} Items ( {{ item_quantity }} )</h4>
                     {% for item in items %}
-                    <li role="presentation"><a href="{{ url_for('item_by_category_and_name', 
-                                                                        category_name=item.category.name,
-                                                                        item_name=item.name)}}">{{item.name}}</a></li>
+                    <ul>
+                        <li role="presentation"><a href="{{ url_for('item_by_category_and_name', 
+                                                                            category_name=item.category.name,
+                                                                            item_name=item.name)}}">{{item.name}}</a></li>
+                    </ul>
                     {% endfor %}
                 </main>
             </div>

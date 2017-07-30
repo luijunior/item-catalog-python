@@ -2,6 +2,7 @@ sqlalchemy
 PyMySQL
 flask
 werkzeug
-Flask-Login
+flask_login
 flask_restful
 oauth2client
+flask_httpauth
