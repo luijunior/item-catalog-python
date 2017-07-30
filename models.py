@@ -60,7 +60,8 @@ def get_complete_data():
     category_list = session.query(Category).all()
     category_response = []
     for category in category_list:
-        category.items = get_items_by_category(category_name=category.name).all()
+        category.items = get_items_by_category(category_name=category.name)\
+            .all()
         category_response.append(category)
     session.close()
     return category_response

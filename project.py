@@ -1,10 +1,7 @@
 #!/usr/bin/env python3
 import models
 import database_setup
-import json
-import flask
-from flask import Flask, render_template, url_for, request, redirect, flash, jsonify, g
-from flask import session as login_session, abort
+from flask import Flask, render_template, url_for, request, redirect, g
 from flask_restful import fields, marshal_with, output_json
 from flask_restful import Resource, Api
 from flask_login import LoginManager, login_user, login_required, logout_user
@@ -48,7 +45,7 @@ def login():
         user = models.get_user_by_email(request.form['username'])
         if not user or not user.verify_password(request.form['password']):
             error = 'Email or password invalid.'
-            return render_template('login.html',error=error)
+            return render_template('login.html', error=error)
         else:
             login_user(user)
             return redirect(url_for('home'))
