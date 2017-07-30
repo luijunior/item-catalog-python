@@ -48,6 +48,24 @@ def get_all_categories():
     return category_list
 
 
+def get_category_by_name(category_name):
+    session = database_factory.get_session()
+    category = session.query(Category).filter_by(name=category_name).first()
+    session.close()
+    return category
+
+
+def update_item(item):
+    session = database_factory.get_session()
+    get_item_by_id(item.id)
+    db_item = item
+    session.add(db_item)
+    name = db_item.name
+    session.commit()
+    session.close()
+    return name
+
+
 def get_all_items():
     session = database_factory.get_session()
     item_list = session.query(Item).all()
@@ -85,6 +103,23 @@ def get_items_by_category(category_name):
 def get_item_by_name(item_name):
     session = database_factory.get_session()
     item = session.query(Item).filter_by(name=item_name).one()
+    session.close()
+    return item
+
+
+def get_item_by_id(item_id):
+    session = database_factory.get_session()
+    item = session.query(Item).filter_by(id=item_id).one()
+    session.close()
+    return item
+
+
+def edit_item(item):
+    session = database_factory.get_session()
+    item_db = session.query(Item).filter_by(id=item.id).one()
+    item_db = item
+    session.add(item_db)
+    session.commit()
     session.close()
     return item
 

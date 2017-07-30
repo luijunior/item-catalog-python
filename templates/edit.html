@@ -3,6 +3,13 @@
     <head>
         <meta name="viewport" content="width=device-width, initial-scale=1">
         <link rel="stylesheet" type="text/css" href="{{ url_for('static', filename='bootstrap-3.3.7-dist/css/bootstrap.min.css') }}">
+        <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
+        <script> 
+            $(function(){
+              $("#header").load("{{ url_for('header')}}"); 
+            });
+        </script>
+        <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
         <style>
             hr {
                display: block;
@@ -19,16 +26,13 @@
                border-top: 1px solid #aaaaaa;
                border-bottom: 1px solid #ffffff;
             }
-            #item_list{
+            #item{
                 background-color: #f5f5f5
             }
+            #category_button{
+                width: 100%;
+            }
         </style>
-        <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
-        <script> 
-            $(function(){
-              $("#header").load("{{ url_for('header')}}"); 
-            });
-        </script>
     </head>
     <body>
         <div class="container">
@@ -44,15 +48,21 @@
                         {% endfor %}
                     </ul>
                 </nav>
-                <main id="item_list" class="col-xs-8 col-sm-8 col-md-8 col-lg-8">
-                    <h4>{{ category_name }} Items ( {{ item_quantity }} )</h4>
-                    {% for item in items %}
-                    <ul>
-                        <li role="presentation"><a href="{{ url_for('item_by_category_and_name', 
-                                                                            category_name=item.category.name,
-                                                                            item_name=item.name)}}">{{item.name}}</a></li>
-                    </ul>
-                    {% endfor %}
+                <main id="item" class="col-xs-8 col-sm-8 col-md-8 col-lg-8">
+                    <form method="post" class="col-md-6 col-lg-6 form-signin">
+                        <h2 class="form-signin-heading">Edit Item</h2>
+                        <label for="inputName">Name</label>
+                        <input type="name" id="inputName" name="name" class="form-control" placeholder="{{item.name}}">
+                        <label for="inputDescription">Description</label>
+                        <input type="text" id="inputDescription" name="description" class="form-control" placeholder="{{item.description}}">
+                        <label for="category_sel">Category</label>
+                        <select class="form-control" name="category_name" id="category_sel">
+                            {% for category in categories %}
+                                <option>{{category.name}}</option>
+                              {% endfor %}
+                        </select>
+                        <button class="btn btn-lg btn-primary btn-block" type="submit">Edit</button>
+                    </form>
                 </main>
             </div>
         </div>

@@ -116,6 +116,46 @@ def item_by_category_and_name(category_name, item_name):
                            item=item)
 
 
+@app.route('/catalog/<item_name>/edit', methods=['GET', 'POST'])
+@login_required
+def edit(item_name):
+    if request.method == 'GET':
+        item = models.get_item_by_name(item_name)
+        categories = models.get_all_categories()
+        return render_template('edit.html',
+                               categories=categories,
+                               item=item)
+    elif request.method == 'POST':
+        name = request.form['name']
+        description = request.form['description']
+        category_name = request.form['category_name']
+        update = False
+        new_item_name = item_name
+        item = models.get_item_by_name(item_name)
+        if item.name != name and name:
+            item.name = name
+            update = True
+        if item.category.name != category_name and category_name:
+            category = models.get_category_by_name(category_name)
+            item.category = category
+            item.category_id = category.id
+            update = True
+        if item.description != description and description:
+            item.description = description
+            update = True
+        if update:
+            new_item_name = models.update_item(item)
+        return redirect(url_for('edit', item_name=new_item_name))
+
+
+# Templates
+
+
+@app.route('/header', methods=['GET'])
+def header():
+    return render_template('header.html')
+
+
 if __name__ == '__main__':
     models.create_tables()
     database_setup.insert_database_objects()
