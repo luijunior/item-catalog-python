@@ -4,8 +4,8 @@ from sqlalchemy import create_engine
 from sqlalchemy.orm import sessionmaker
 
 Base = declarative_base()
-Host = "localhost"
-# Host = "item_catalog_db"
+# Host = "localhost"
+Host = "item_catalog_db"
 
 
 ''' Class for make a connection to database
