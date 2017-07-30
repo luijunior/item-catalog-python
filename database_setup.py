@@ -7,7 +7,6 @@ import datetime
 
 def insert_database_objects():
     session = database_factory.get_session()
-    print("Item quantity - "+ str(session.query(Category).count()))
     if session.query(Category).count() == 0:
         def insert_items():
             with open('setup_db.json') as data_file:

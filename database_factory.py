@@ -5,11 +5,14 @@ from sqlalchemy.orm import sessionmaker
 
 Base = declarative_base()
 Host = "localhost"
-#Host = "item_catalog_db"
+''' Host = "item_catalog_db" '''
 
 
 def get_engine():
-    engine = create_engine("mysql+pymysql://item_catalog_app:itemcatalog123@%s:3306/item_catalog_db" % Host)
+    engine = create_engine("mysql+pymysql://item_catalog_app"
+                           ":itemcatalog123@%s:3306"
+                           "/item_catalog_db"
+                           % Host)
     return engine
 
 
