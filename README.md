@@ -8,7 +8,7 @@
 * Have Docker installed
 * Run the sequence bellow
 ```python
-cd ProjectItemCatalog/
+cd projectitemcatalog
 docker build -t item-catalog-python:1.0.0-RELEASE .
 docker-compose up
 ```
