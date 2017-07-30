@@ -19,7 +19,7 @@ class Category(Base):
 class Item(Base):
     __tablename__ = 'item'
     id = Column(Integer, primary_key=True)
-    name = Column(String(100), nullable=False)
+    name = Column(String(100), nullable=False, unique=True)
     description = Column(String(1000), nullable=False)
     date = Column(DateTime, nullable=False)
     category_id = Column(Integer, ForeignKey('category.id'))
@@ -64,6 +64,14 @@ def update_item(item):
     session.commit()
     session.close()
     return name
+
+
+def remove_item_by_id(item_id):
+    session = database_factory.get_session()
+    db_item = get_item_by_id(item_id)
+    session.delete(db_item)
+    session.commit()
+    session.close()
 
 
 def get_all_items():

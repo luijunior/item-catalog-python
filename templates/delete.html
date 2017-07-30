@@ -3,6 +3,13 @@
     <head>
         <meta name="viewport" content="width=device-width, initial-scale=1">
         <link rel="stylesheet" type="text/css" href="{{ url_for('static', filename='bootstrap-3.3.7-dist/css/bootstrap.min.css') }}">
+        <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
+        <script> 
+            $(function(){
+              $("#header").load("{{ url_for('header')}}"); 
+            });
+        </script>
+        <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
         <style>
             hr {
                display: block;
@@ -19,16 +26,13 @@
                border-top: 1px solid #aaaaaa;
                border-bottom: 1px solid #ffffff;
             }
-            #latest_items{
+            #item{
                 background-color: #f5f5f5
             }
+            #category_button{
+                width: 100%;
+            }
         </style>
-        <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
-        <script> 
-            $(function(){
-              $("#header").load("{{ url_for('header')}}"); 
-            });
-        </script> 
     </head>
     <body>
         <div class="container">
@@ -44,13 +48,12 @@
                         {% endfor %}
                     </ul>
                 </nav>
-                <main id="latest_items" class="col-xs-8 col-sm-8 col-md-8 col-lg-8">
-                    <h4>Latest Items</h4>
-                    {% for latest_item in latest_items %}
-                    <li role="presentation"><a href="{{ url_for('item_by_category_and_name', 
-                                                                        category_name=latest_item.category.name,
-                                                                        item_name=latest_item.name)}}">{{latest_item.name}}</a></li>
-                    {% endfor %}
+                <main id="item" class="col-xs-8 col-sm-8 col-md-8 col-lg-8">
+                    <form method="post" class="col-md-6 col-lg-6 form-signin">
+                        <h2 class="form-signin-heading">Delete Item</h2>
+                        <p id="item_name">{{item.name}}</p>
+                        <button class="btn btn-lg btn-primary btn-block" type="submit">Delete</button>
+                    </form>
                 </main>
             </div>
         </div>

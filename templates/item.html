@@ -50,6 +50,7 @@
                     <article id="item_description">{{item.description}}</article>
                     {% if current_user.is_authenticated %}
                         <a class="btn btn-primary" role="button" href="{{ url_for('edit',item_name=item.name)}}">Edit</a>
+                        <a class="btn btn-primary" role="button" href="{{ url_for('delete',item_name=item.name)}}">Delete</a>
                     {% endif %}
                 </main>
             </div>
