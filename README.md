@@ -13,6 +13,8 @@ docker build -t item-catalog-python:1.0.0-RELEASE .
 docker-compose up
 ```
 
+Open in browser -> http://localhost:5000
+
 ### Adding Categories and Items ###
 
 In the setup_db.json you can add new items and categories that will be included in the image os the app
