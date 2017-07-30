@@ -24,6 +24,8 @@ class Item(Base):
     category_id = Column(Integer, ForeignKey('category.id'))
     category = relationship(Category, lazy='subquery')
 
+# Extending to UserMixin for flask_login
+
 
 class User(Base, UserMixin):
     __tablename__ = 'user'
