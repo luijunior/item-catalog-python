@@ -1,12 +1,44 @@
 #!/usr/bin/env python3
 import models
 import database_setup
+import json
 import flask
 from flask import Flask, render_template, url_for, request, redirect, flash, jsonify
 from flask import session as login_session
-from flask_restful import Resource, fields, marshal_with
+from flask_restful import fields, marshal_with
+from flask_restful import Resource, Api
 app = Flask(__name__)
+api = Api(app)
 APPLICATION_NAME = "Catalog App"
+
+item_fields = {
+    'id': fields.String,
+    'name': fields.String,
+    'description': fields.String
+}
+
+category_fields = {
+    'id': fields.String,
+    'name': fields.String,
+    'items': fields.List(fields.Nested(item_fields))
+}
+
+
+class CategoryResource(Resource):
+    @marshal_with(category_fields, envelope='categories')
+    def get(self, **kwargs):
+        complete_data = models.get_complete_data()
+        for complete in complete_data:
+            print('------Category------')
+            print(complete.id)
+            print(complete.name)
+            for item in complete.items:
+                print('-------Item--------')
+                print(item.name)
+                print(item.description)
+        return models.get_complete_data()
+
+api.add_resource(CategoryResource, '/catalog.json')
 
 
 @app.route('/', methods=['GET'])
@@ -37,17 +69,6 @@ def item_by_category_and_name(category_name, item_name):
     return render_template('item.html',
                            categories=categories,
                            item=item)
-
-
-@app.route('/catalog.json', methods=['GET'])
-def all_catalog_json():
-    categories = models.get_complete_data()
-    json_response = []
-    for category in categories:
-        json_response.append(category.serialize)
-
-    return jsonify(Categories=json_response
-                   )
 
 
 if __name__ == '__main__':

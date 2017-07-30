@@ -2,6 +2,7 @@
 from sqlalchemy import Column, ForeignKey, Integer, String, DateTime
 from sqlalchemy.ext.declarative import declarative_base
 from sqlalchemy.orm import relationship
+from flask_restful import Resource, fields, marshal_with
 import database_factory
 
 Base = declarative_base()
@@ -11,15 +12,6 @@ class Category(Base):
     __tablename__ = 'category'
     id = Column(Integer, primary_key=True)
     name = Column(String(100), nullable=False)
-    items = []
-
-    @property
-    def serialize(self):
-        return {
-            'id': self.id,
-            'name': self.name,
-            'items': [item.serialize() for item in self.items]
-        }
 
 
 class Item(Base):
@@ -30,15 +22,6 @@ class Item(Base):
     date = Column(DateTime, nullable=False)
     category_id = Column(Integer, ForeignKey('category.id'))
     category = relationship(Category, lazy='subquery')
-
-    @property
-    def serialize(self):
-        return {
-            'id': self.id,
-            'name': self.name,
-            'description': self.description,
-            'date': self.date
-        }
 
 
 def get_all_categories():
@@ -61,7 +44,6 @@ def get_complete_data():
     category_response = []
     for category in category_list:
         category.items = get_items_by_category(category_name=category.name).all()
-        print(category)
         category_response.append(category)
     session.close()
     return category_response
