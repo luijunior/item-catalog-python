@@ -5,7 +5,7 @@ from sqlalchemy.orm import sessionmaker
 
 Base = declarative_base()
 # Host = "localhost"
-Host = "item_catalog_db"
+Host = "item_catalog-db"
 
 
 ''' Class for make a connection to database
