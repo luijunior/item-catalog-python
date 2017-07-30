@@ -6,3 +6,4 @@ flask_login
 flask_restful
 oauth2client
 flask_httpauth
+passlib

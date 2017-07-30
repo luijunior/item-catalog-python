@@ -6,6 +6,7 @@ from flask_restful import fields, marshal_with, output_json
 from flask_restful import Resource, Api
 from flask_login import LoginManager, login_user, login_required, logout_user
 from flask_httpauth import HTTPBasicAuth
+from time import sleep
 
 app = Flask(__name__)
 api = Api(app)
@@ -260,7 +261,11 @@ def header():
 
 
 if __name__ == '__main__':
+    # Wait the database to init
+    sleep(30)
+    # Create the tables in database
     models.create_tables()
+    # Insert the categories and items
     database_setup.insert_database_objects()
     app.secret_key = 'super-secret-key'
     app.debug = True

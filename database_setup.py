@@ -4,6 +4,10 @@ from models import Category, Item
 import json
 import datetime
 
+''' Class for the setup of the database this will insert
+ All categories and items from the setup_db.json file
+'''
+
 
 def insert_database_objects():
     session = database_factory.get_session()

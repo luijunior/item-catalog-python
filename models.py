@@ -2,7 +2,6 @@
 from sqlalchemy import Column, ForeignKey, Integer, String, DateTime
 from sqlalchemy.ext.declarative import declarative_base
 from sqlalchemy.orm import relationship
-from flask_restful import Resource, fields, marshal_with
 import database_factory
 from flask_login import UserMixin
 from passlib.apps import custom_app_context as pwd_context
