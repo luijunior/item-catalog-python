@@ -1,6 +1,6 @@
-# Movie Trailer Website #
+# Item Catalog APP #
 
-### Project 1 from udacity Full stack web developer ###
+### Project from udacity Full stack web developer ###
 
 ### How do I get set up? ###
 
