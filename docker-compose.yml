@@ -12,7 +12,7 @@ services:
   expose:
    - '3306'
  item_catalog_app:
-  image: item-catalog-python:1.0.0-RELEASE
+  image: item-catalog-python:2.1.0-RELEASE
   ports:
    - "5000:5000"
   links:

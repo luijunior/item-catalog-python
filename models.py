@@ -29,17 +29,10 @@ class Item(Base):
 
 class User(Base, UserMixin):
     __tablename__ = 'user'
-    id = Column(Integer, primary_key=True)
+    id = Column(String(100), primary_key=True)
     name = Column(String(100), nullable=False)
     email = Column(String(32), nullable=False, unique=True)
-    password_hash = Column(String(500), nullable=False)
     picture = Column(String(500), nullable=True)
-
-    def hash_password(self, password):
-        self.password_hash = pwd_context.encrypt(password)
-
-    def verify_password(self, password):
-        return pwd_context.verify(password, self.password_hash)
 
 
 def get_all_categories():
@@ -133,8 +126,7 @@ def edit_item(item):
     return item
 
 
-def create_user(user, password):
-    user.hash_password(password)
+def create_user(user):
     session = database_factory.get_session()
     session.add(user)
     session.commit()

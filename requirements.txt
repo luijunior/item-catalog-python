@@ -7,3 +7,6 @@ flask_restful
 oauth2client
 flask_httpauth
 passlib
+google-api-python-client
+flask_kvsession
+requests

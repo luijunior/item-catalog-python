@@ -2,13 +2,49 @@
     <hr/>
     <h2 class="col-xs-10 col-md-10 col-sm-10 col-md-10 col-lg-10 text-center">Catalog App</h2>
     <div class="col-xs-2 col-md-2 col-sm-2 col-md-2 col-lg-2">
+        <script src="//ajax.googleapis.com/ajax/libs/jquery/1.8.2/jquery.min.js">
 
+        </script>
+        <script src="//apis.google.com/js/platform.js?onload=start">
+
+        </script>
         {% if current_user.is_authenticated %}
-          <a class="btn btn-primary pull-right" role="button" href="{{ url_for('logout')}}">Logout</a>
+        <a class="btn btn-primary pull-right" role="button" href="{{ url_for('logout')}}">Logout</a> 
         {% else %}
-           <a class="btn btn-primary pull-right" role="button" href="{{ url_for('login')}}">Login</a>
+        <div id="signinButton">
+            <span class="g-signin" data-scope="openid email" data-clientid="70971533530-8h02376am4rog3dd1i2m1jm2ojfhc4rq.apps.googleusercontent.com"
+                data-redirecturi="postmessage" data-accesstype="offline" data-cookiepolicy="single_host_origin" data-callback="signInCallback"
+                data-approvalprompt="force">
+                        </span>
+        </div>
+        <script>
+                function signInCallback(authResult) {
+                    if (authResult['code']) {
+                        $('#signinButton').attr('style', 'display: none');
+                        $.ajax({
+                            type: 'POST',
+                            url: '/gconnect?state={{STATE}}',
+                            processData: false,
+                            data: authResult['code'],
+                            contentType: 'application/octet-stream; charset=utf-8',
+                            success: function (result) {
+                                if (result) {
+                                    console.log('Login com sucesso, redirecionando')
+                                    setTimeout(function () {
+                                        window.location.href = '/';
+                                    }, 4000);
+                                } else if (authResult['error']) {
+                                    console.log('Erro no login: ' + authResult['error']);
+                                } else {
+                                    console.log('Failed to make a server-side call. Check your configuration and console.');
+                                }
+                            }
+                        });
+                    }
+                }
+            </script>
         {% endif %}
-
+        
     </div>
     <hr/>
 </header>
